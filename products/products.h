@@ -1,0 +1,20 @@
+#ifndef PRODUCTS_H
+#define PRODUCTS_H
+
+typedef struct productList
+{
+   char key[14];
+   char name[65];
+   int quantity;
+   int price;
+   struct productList *next;
+} product;
+
+extern product *productsHead;
+
+void addProduct(char *ean);
+product *createProduct(char *ean);
+void removeProduct(char *ean);
+void freeProducts();
+
+#endif
