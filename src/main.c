@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "utils/utils.h"
-#include "errors/errors.h"
-#include "products/products.h"
-
+#include "utils.h"
 
 int main(void)
 {
+   
    int len, ch;
    char ean[14];
 
@@ -15,26 +13,22 @@ int main(void)
    {
       fgets(ean, sizeof(ean), stdin);
       strNewLine(ean);
-
       len = strlen(ean);
+
       if (len == 13)
       {
          addProduct(ean);
          break;
       }
-      else if (len >= 4 && len <= 12)
+      else if (len >= 4 && len < 13)
       {
-         ch = strCharCount(ean, len);
-         if (ch >= 4)
-         {
-            puts("Proteine");
-            break;
-         }
+         recommendProducts(ean, len);
+         break;
       }
       else
-         puts("Error!");
+         puts("Error!"); // wrong ean
    }
 
-   freeProducts();
+   freeData();
    return 0;
 }

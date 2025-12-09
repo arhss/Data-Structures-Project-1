@@ -6,6 +6,6 @@
 #define clearBuffer() int ch; while ((ch = getchar()) != '\n' && ch != EOF) {}
 
 void strNewLine(char *str);
-int strCharCount(char *str, int len);
+void freeData();
 
 #endif

@@ -1,8 +1,7 @@
-#ifndef ERRORS_H
-#define ERRORS_H
+#ifndef MESSAGES_H
+#define MESSAGES_H
 
 extern const char *PRODUCT_MALLOC;
 extern const char *PRODUCT_ALREADY_EXISTS;
-extern const char *PRODUCT_NOT_FOUND;
 
 #endif

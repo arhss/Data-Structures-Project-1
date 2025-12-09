@@ -1,17 +1,15 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -Iproducts -Iutils -Ierrors
+CFLAGS = -Wall -Wextra -std=c11 -Iinclude
 
-SRC = $(wildcard *.c */*.c)
-OBJ = $(SRC:.c=.o)
-TARGET = myprogram
+SRC = $(wildcard src/*.c)
+TARGET = build
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET)
+
+.PHONY: all clean

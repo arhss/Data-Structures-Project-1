@@ -1,9 +1,16 @@
+/*
+ * Add description
+ */
+
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "utils.h"
+#include "messages.h"
+#include "products.h"
+#include "orders.h"
 
+//
 void strNewLine(char *str)
 {
    int len = strlen(str);
@@ -11,13 +18,9 @@ void strNewLine(char *str)
       str[len-1] = '\0';
 }
 
-int strCharCount(char *str, int len)
+//
+void freeData()
 {
-   int i, ch = 0;
-   for (i = 0; i < len; i++)
-   {
-      if (isalpha(str[i]))
-         ch++;
-   }
-   return ch;
+   freeProducts();
+   freeOrders();
 }
