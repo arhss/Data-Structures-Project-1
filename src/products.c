@@ -43,7 +43,7 @@ void addProduct(char *ean)
    temp->next = newNode;
 }
 
-// Creates (allocates) and Configures a product
+// Creates (allocates memory) and Configures a product
 product *createProduct(char *ean)
 {
    product *node = malloc(sizeof(product));
@@ -59,7 +59,7 @@ product *createProduct(char *ean)
    printf("Name: ");
    clearBuffer(); // Clear any leftover '\n' from the buffer
    fgets(node->name, sizeof(node->name), stdin);
-   strNewLine(node->name);
+   strNewLine(node->name); //
 
    printf("Quantity: ");
    scanf("%d", &node->quantity);
@@ -127,6 +127,6 @@ void freeProducts()
       free(temp);
       temp = next;
    }
-
+   
    productsHead = NULL;
 }
