@@ -2,32 +2,35 @@
 #include <string.h>
 
 #include "utils.h"
+#include "products.h"
 
 int main(void)
 {
-   
-   int len, ch;
-   char ean[14];
+
+   int len;
+   char ean[14], idk99;
 
    while (1)
    {
+      printf("Dwse ean ");
       fgets(ean, sizeof(ean), stdin);
       strNewLine(ean);
       len = strlen(ean);
 
       if (len == 13)
-      {
          addProduct(ean);
-         break;
-      }
       else if (len >= 4 && len < 13)
-      {
          recommendProducts(ean, len);
-         break;
-      }
       else
          puts("Error!"); // wrong ean
+
+      printf("Continue? ");
+      scanf("%c", &idk99);
+      if (idk99 == 'X')
+         break;
    }
+
+   printProducts("*", 1);
 
    freeData();
    return 0;

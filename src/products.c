@@ -1,5 +1,5 @@
 /*
- * Add description
+ * This file contains the functions related to the products of the Warehouse Management System.
  */
 
 #include <stdio.h>
@@ -43,7 +43,7 @@ void addProduct(char *ean)
    temp->next = newNode;
 }
 
-// Creates (allocates memory) and Configures a product
+// Allocates memory and Configures a product
 product *createProduct(char *ean)
 {
    product *node = malloc(sizeof(product));
@@ -57,22 +57,21 @@ product *createProduct(char *ean)
    strcpy(node->key, ean);
 
    printf("Name: ");
-   clearBuffer(); // Clear any leftover '\n' from the buffer
    fgets(node->name, sizeof(node->name), stdin);
-   strNewLine(node->name); //
+   strNewLine(node->name); // Removes newline from a string's end
 
    printf("Quantity: ");
    scanf("%d", &node->quantity);
 
    printf("Price: ");
-   scanf("%f", &node->price);
+   scanf("%lf", &node->price);
 
    node->next = NULL;
 
    return node;
 }
 
-// Recommends (prints) product(s) based on the given incomplete EAN
+// Prints product(s) from an incomplete EAN
 void recommendProducts(char *ean, int len)
 {
    product *temp = productsHead;
@@ -98,16 +97,22 @@ void printProducts(char *str, int len)
       }
    }
 
-   // Prints products based on the full or partial EAN..
+   // Prints based on the full or partial EAN..
+   int flag = FALSE;
    temp = productsHead;
    while (temp != NULL)
    {
       if (strncmp(temp->key, str, len) == 0)
+      {
          printf("%s: %s, quantity: %d\n", temp->name, temp->key, temp->quantity);
+         flag = TRUE;
+      }
       temp = temp->next;
    }
 
    // Prints product based on its name..
+   if (flag == TRUE)
+      return;
    temp = productsHead;
    while (temp != NULL)
    {
@@ -117,7 +122,7 @@ void printProducts(char *str, int len)
    }
 }
 
-// Frees products list memory
+// Frees products' list memory
 void freeProducts()
 {
    product *temp = productsHead;

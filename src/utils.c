@@ -10,7 +10,7 @@
 #include "products.h"
 #include "orders.h"
 
-//
+// Removes newline from a string's end
 void strNewLine(char *str)
 {
    int len = strlen(str);
@@ -22,5 +22,5 @@ void strNewLine(char *str)
 void freeData()
 {
    freeProducts();
-   freeOrders();
+   // freeOrders();
 }

@@ -3,18 +3,11 @@
 
 typedef struct orderList
 {
-   int key;
+   int customerID;
    char name[65];
-   char **productsArray;
+   char **products;
    int *quantity;
-   // priority
-   struct orderList *next;
+   int priority;
 } order;
-
-extern order *ordersHead;
-
-void addOrder(char *ean);
-order *createOrder(char *ean);
-void freeOrders();
 
 #endif

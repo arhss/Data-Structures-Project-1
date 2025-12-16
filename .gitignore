@@ -1,45 +1,27 @@
-#--------------------------#
-# Magento Default Files    #
-#--------------------------#
+/bin/
 
-/PATCH_*.sh
+*.o
 
-/app/etc/local.xml
+/lib/glfw/src/*.a
+/lib/glfw/src/cmake_install.cmake
+/lib/glfw/src/Makefile
+/lib/glfw/src/*.o
+/lib/glfw/CMakeCache.txt
+/lib/glfw/CMakeFiles/
+/lib/glfw/Makefile
 
-/media/*
-!/media/.htaccess
+/lib/cglm/*.a
+/lib/cglm/CMakeCache.txt
+/lib/cglm/CMakeFiles/
+/lib/cglm/Makefile
 
-!/media/customer
-/media/customer/*
-!/media/customer/.htaccess
+/lib/glad/src/*.o
 
-!/media/dhl
-/media/dhl/*
-!/media/dhl/logo.jpg
+/lib/noise/libnoise.a
+/lib/noise/*.o
+/lib/noise/Makefile
 
-!/media/downloadable
-/media/downloadable/*
-!/media/downloadable/.htaccess
-
-!/media/xmlconnect
-/media/xmlconnect/*
-
-!/media/xmlconnect/custom
-/media/xmlconnect/custom/*
-!/media/xmlconnect/custom/ok.gif
-
-!/media/xmlconnect/original
-/media/xmlconnect/original/*
-!/media/xmlconnect/original/ok.gif
-
-!/media/xmlconnect/system
-/media/xmlconnect/system/*
-!/media/xmlconnect/system/ok.gif
-
-/var/*
-!/var/.htaccess
-
-!/var/package
-/var/package/*
-!/var/package/*.xml
-
+CMakeCache.txt
+CMakeFiles/
+Makefile.in
+cmake_install.cmake
