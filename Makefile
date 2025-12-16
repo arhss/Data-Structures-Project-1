@@ -2,21 +2,25 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -Iinclude
 TARGET = build
 SRC_DIR = src
+OBJ_DIR = obj
 
 SRC = $(wildcard $(SRC_DIR)/*.c)
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-.PHONY: all clean
+.PHONY: all clean dirs
 
-all: $(TARGET)
+all: dirs $(TARGET)
+
+dirs:
+	@mkdir -p $(OBJ_DIR)
 
 $(TARGET): $(OBJ)
 	$(CC) $^ -o $@
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(TARGET)
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
