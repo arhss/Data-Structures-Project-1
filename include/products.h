@@ -15,7 +15,7 @@ extern product *productsHead;
 void addProduct(char *ean);
 product *createProduct(char *ean);
 void recommendProducts(char *ean, int len);
-void printProducts(char *str, int len);
+void printProducts(char *str);
 void freeProducts();
 
 #endif

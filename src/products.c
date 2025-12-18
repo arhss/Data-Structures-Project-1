@@ -1,22 +1,23 @@
 /*
- * This file contains the functions related to the products of the Warehouse Management System.
+ * Add description
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "utils.h"
-#include "messages.h"
 #include "products.h"
+#include "messages.h"
+#include "utils.h"
 
 product *productsHead = NULL;
 
-// Adds a product to the list
+// This function is used in _, when a valid code is given, in order to add a product into the list.
 void addProduct(char *ean)
 {
-   // Searches if the product already exitsts..
    product *temp = productsHead;
+
+   // Searches if the product already exitsts..
    while (temp != NULL)
    {
       if (strcmp(temp->key, ean) == 0)
@@ -29,6 +30,7 @@ void addProduct(char *ean)
    }
 
    product *newNode = createProduct(ean);
+   printf(PRODUCT_CREATED_SUCCESSFULLY, newNode->key);
 
    if (productsHead == NULL) // If the list is empty
    {
@@ -43,13 +45,13 @@ void addProduct(char *ean)
    temp->next = newNode;
 }
 
-// Allocates memory and Configures a product
+// Used by addProduct() in order to allocate memory and configure a product.
 product *createProduct(char *ean)
 {
    product *node = malloc(sizeof(product));
    if (!node)
    {
-      puts(PRODUCT_MALLOC);
+      puts(PRODUCT_MALLOC_ERROR);
       freeData();
       exit(1);
    }
@@ -57,72 +59,103 @@ product *createProduct(char *ean)
    strcpy(node->key, ean);
 
    printf("Name: ");
-   fgets(node->name, sizeof(node->name), stdin);
-   strNewLine(node->name); // Removes newline from a string's end
+   input(node->name, sizeof(node->name));
 
-   printf("Quantity: ");
-   scanf("%d", &node->quantity);
-
-   printf("Price: ");
-   scanf("%lf", &node->price);
+   while(1)
+   {
+      printf("Quantity: ");
+      scanf("%d", &node->quantity);
+      if (node->quantity >= 0)
+         break;
+      puts(PRODUCT_QUANTITY_ERROR);
+   }
+   
+   while(1)
+   {
+      printf("Price: ");
+      scanf("%lf", &node->price);
+      if (node->price > 0)
+         break;
+      puts(PRODUCT_PRICE_ERROR);
+   }
+   
+   clearBuffer(); // Clear any leftover '\n' from the buffer
 
    node->next = NULL;
 
    return node;
 }
 
-// Prints product(s) from an incomplete EAN
+// Used in _, when a valid but incomplete code is given, in order to recommend product(s) with similar codes.
 void recommendProducts(char *ean, int len)
 {
+   int flag = TRUE;
    product *temp = productsHead;
    while (temp != NULL)
    {
-      if (strncmp(temp->key, ean, len) == 0) // Compare EANs using the given length
-         puts(temp->key);
+      // Compares based on the incomplete's code length..
+      if (strncmp(temp->key, ean, len) == 0)
+      {
+         if (flag)
+         {
+            puts(RECOMMENDATION_TEXT);
+            flag = FALSE;
+         }
+         printf(PRODUCT_RECOMMEND, temp->key);
+      }
       temp = temp->next;
    }
+
+   if (flag)
+      printf(PRODUCT_NOT_FOUND, ean);
 }
 
-// Prints products
-void printProducts(char *str, int len)
+// Used in _ in order to print products in several ways.
+void printProducts(char *str)
 {
-   // Prints all products..
-   product *temp = productsHead;
-   if (strncmp(str, "*", 1) == 0)
+   int len = strlen(str);
+   product *temp;
+
+   /* Case 1:
+      Prints all.. */
+   if (strcmp(str, "*") == 0)
    {
+      temp = productsHead;
       while (temp != NULL)
       {
-         printf("%s: %s, quantity: %d\n", temp->name, temp->key, temp->quantity);
+         printf(PRODUCT_PRINT, temp->key, temp->name, temp->quantity, temp->price);
          temp = temp->next;
       }
    }
 
-   // Prints based on the full or partial EAN..
+   /* Case 2:
+      Prints product(s) based on full or partial code.. */
    int flag = FALSE;
    temp = productsHead;
    while (temp != NULL)
    {
       if (strncmp(temp->key, str, len) == 0)
       {
-         printf("%s: %s, quantity: %d\n", temp->name, temp->key, temp->quantity);
+         printf(PRODUCT_PRINT, temp->key, temp->name, temp->quantity, temp->price);
          flag = TRUE;
       }
       temp = temp->next;
    }
-
-   // Prints product based on its name..
-   if (flag == TRUE)
+   if (flag == TRUE) // If case 2 has been executed successfully
       return;
+
+   /* Case 3:
+      Prints product(s) based on name.. */
    temp = productsHead;
    while (temp != NULL)
    {
       if (strcmp(temp->name, str) == 0)
-         printf("%s: %s, quantity: %d\n", temp->name, temp->key, temp->quantity);
+         printf(PRODUCT_PRINT, temp->key, temp->name, temp->quantity, temp->price);
       temp = temp->next;
    }
 }
 
-// Frees products' list memory
+// Used in freeData() in order free the memory of the products' list.
 void freeProducts()
 {
    product *temp = productsHead;
@@ -132,6 +165,6 @@ void freeProducts()
       free(temp);
       temp = next;
    }
-   
    productsHead = NULL;
+   puts(FREE_PRODUCTS);
 }

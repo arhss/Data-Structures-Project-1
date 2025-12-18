@@ -6,19 +6,29 @@
 #include <string.h>
 
 #include "utils.h"
-#include "messages.h"
 #include "products.h"
 #include "orders.h"
 
-// Removes newline from a string's end
-void strNewLine(char *str)
+void input(char *dest, int size)
 {
-   int len = strlen(str);
-   if (str[len-1] == '\n')
-      str[len-1] = '\0';
+   char *ptr;
+   if (fgets(dest, size, stdin) != NULL)
+   {
+      ptr = strchr(dest, '\n');
+
+      if (ptr != NULL)
+         *ptr = '\0';
+      else
+         clearBuffer();
+   }
 }
 
-//
+void clearBuffer(void)
+{
+   int ch;
+   while ((ch = getchar()) != '\n' && ch != EOF){}
+}
+
 void freeData()
 {
    freeProducts();

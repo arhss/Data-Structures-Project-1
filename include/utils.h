@@ -3,9 +3,9 @@
 
 #define TRUE 1
 #define FALSE 0
-#define clearBuffer() int ch; while ((ch = getchar()) != '\n' && ch != EOF) {} // Clear any leftover '\n' from the buffer
 
-void strNewLine(char *str);
+void input(char *dest, int size);
+void clearBuffer(void);
 void freeData();
 
 #endif
